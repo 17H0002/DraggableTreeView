@@ -143,6 +143,7 @@ public class DraggableTreeView extends FrameLayout{
     public boolean handleItemDragEvent(MotionEvent event){
         switch (event.getAction() & MotionEvent.ACTION_MASK) {
             case MotionEvent.ACTION_DOWN:
+                lastDown = System.currentTimeMillis();
                 mDownX = (int)event.getRawX();
                 mDownY = (int)event.getRawY();
                 break;
@@ -179,6 +180,33 @@ public class DraggableTreeView extends FrameLayout{
                 }
                 break;
             case MotionEvent.ACTION_UP:
+                long lastDuration = System.currentTimeMillis() - lastDown;
+                if (lastDuration < 200)
+                {
+                    AlertDialog.Builder alert = new AlertDialog.Builder(this.getContext());
+
+                    alert.setTitle("Title");
+                    alert.setMessage("Message");
+
+// Set an EditText view to get user input
+                    final EditText input = new EditText(this.getContext());
+                    alert.setView(input);
+
+                    alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int whichButton) {
+                            String value = input.getText().toString();
+                            // Do something with value!
+                        }
+                    });
+
+                    alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int whichButton) {
+                            // Canceled.
+                        }
+                    });
+
+                    alert.show();
+                }
                 touchEventsCancelled();
                 break;
             case MotionEvent.ACTION_CANCEL:
