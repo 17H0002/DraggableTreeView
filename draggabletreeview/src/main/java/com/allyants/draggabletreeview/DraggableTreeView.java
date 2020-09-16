@@ -207,7 +207,7 @@ public class DraggableTreeView extends FrameLayout{
 
                     alert.show();
                 }
-                touchEventsCancelled();
+                //touchEventsCancelled();
                 break;
             case MotionEvent.ACTION_CANCEL:
                 touchEventsCancelled();
